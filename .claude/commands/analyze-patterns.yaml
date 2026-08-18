@@ -1,0 +1,56 @@
+name: analyze-patterns
+description: 디자인 패턴 및 베스트 프랙티스 분석
+group: learning
+
+steps:
+  - type: agent
+    prompt: |
+      FastAPI Starter Kit에서 사용된 디자인 패턴과 베스트 프랙티스를 분석해주세요:
+
+      ## 분석 항목:
+
+      1. **구조적 패턴**
+         - 레이어드 아키텍처 패턴
+         - DTO (Data Transfer Object) 패턴
+         - Repository 패턴
+         - Service Locator vs Dependency Injection
+
+      2. **생성 패턴**
+         - 싱글톤 패턴 사용 여부
+         - 팩토리 패턴 적용 여부
+         - 의존성 주입 컨테이너 패턴
+
+      3. **행동 패턴**
+         - 옵저버 패턴 (이벤트 처리)
+         - 전략 패턴 (다양한 구현 선택)
+         - 책임 연쇄 패턴 (미들웨어)
+
+      4. **FastAPI 특화 패턴**
+         - Depends를 활용한 의존성 주입
+         - 라우팅 구성 패턴
+         - 미들웨어와 예외 처리 패턴
+         - 백그라운드 작업 처리
+
+      5. **Python/FastAPI 베스트 프랙티스**
+         - 타입 힌팅 활용도
+         - 동시성 처리 패턴
+         - 테스트 작성 가능성
+         - 로깅 및 모니터링
+
+      6. **개선 제안**
+         - 현재 코드에서 적용 가능한 추가 패턴
+         - 코드 재사용성 개선 방안
+         - 테스트 가능성 향상 방법
+         - 성능 최적화 기회
+
+      각 패턴에 대해:
+      - 패턴의 정의와 목적
+      - 프로젝트에서의 적용 예시
+      - 다른 구현 방식과의 비교
+      - 언제 사용해야 하는지
+
+      를 설명해주세요.
+
+    agent_options:
+      effort: high
+      phase: Pattern Analysis

@@ -1,0 +1,45 @@
+name: review-code-quality
+description: FastAPI 코드 품질 및 아키텍처 패턴 리뷰
+group: code-review
+
+steps:
+  - type: agent
+    prompt: |
+      FastAPI Starter Kit의 코드를 다음 기준으로 리뷰해주세요:
+
+      ## 검토 항목:
+      1. **레이어드 아키텍처 준수**
+         - Controller → Service → Repository 계층 분리
+         - 각 계층의 책임이 명확한지 확인
+         - 순환 의존성이 없는지 확인
+
+      2. **DTO 패턴 검증**
+         - Request/Response DTO 사용 여부
+         - 스키마와 실제 사용의 일관성
+         - 데이터 변환 로직이 올바른지 확인
+
+      3. **의존성 주입**
+         - FastAPI의 Depends를 올바르게 사용하는지 확인
+         - 테스트 가능성이 있는지 확인
+         - 싱글톤 vs 요청별 인스턴스 생성 패턴
+
+      4. **에러 핸들링**
+         - 예외 처리가 일관성 있는지 확인
+         - custom exception 활용 여부
+         - HTTP 상태 코드 매핑이 적절한지 확인
+
+      5. **데이터베이스 트랜잭션**
+         - 트랜잭션 관리가 올바른지 확인
+         - Rollback 로직 존재 여부
+         - 트랜잭션 범위가 적절한지 확인
+
+      6. **API 응답 형식 일관성**
+         - 응답 구조가 일관적인지 확인
+         - 에러 응답 형식이 표준화되어 있는지 확인
+         - 메타데이터(페이지네이션 등) 처리
+
+      각 항목에 대해 개선 사항을 구체적으로 제시해주세요.
+
+    agent_options:
+      effort: high
+      phase: Code Quality Review
