@@ -1,0 +1,66 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"$cmd = $args[0]; Add-Content -Path \\\"$env:USERPROFILE\\\\.claude\\\\bash-log.txt\\\" -Value \\\"[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] $cmd\\\" 2>/dev/null\" -- \\\"test command\\\"",
+            "statusMessage": "명령어 기록 중...",
+            "timeout": 5,
+            "async": true
+          },
+          {
+            "type": "prompt",
+            "prompt": "다음 Bash 명령어가 위험한가요? 위험한 명령어(rm -rf, format, dd if=, :() 등)는 차단되어야 합니다.\n\n명령어: $ARGUMENTS\n\n위험하면 {\"continue\": false, \"stopReason\": \"⚠️ 위험한 명령어가 차단되었습니다\"} 반환, 안전하면 {\"continue\": true} 반환",
+            "statusMessage": "위험 명령어 검사 중...",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"if ($env:FILE_PATH) { if (Test-Path $env:FILE_PATH) { $bakFile = \\\"$env:FILE_PATH.bak\\\"; Copy-Item $env:FILE_PATH $bakFile -Force -ErrorAction SilentlyContinue; } }\"",
+            "statusMessage": "중요 파일 백업 중...",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"try { [System.Windows.Forms.MessageBox]::Show('작업이 완료되었습니다', '✅ Claude Code 알림', 'OK', 'Information'); } catch { Write-Host '✅ 작업 완료'; }\"",
+            "statusMessage": "작업 완료 알림 전송 중...",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\": \"🤖 서브 에이전트 작업 완료\"}'",
+            "statusMessage": "서브 에이전트 완료 알림",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
